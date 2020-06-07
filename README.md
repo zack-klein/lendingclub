@@ -1,4 +1,7 @@
 # LendingClub Data Engineering Project
+
+![Tag](https://img.shields.io/github/v/tag/zack-klein/lendingclub.svg) [![Build Status](https://travis-ci.com/zack-klein/lendingclub.svg?branch=master)](https://travis-ci.com/zack-klein/lendingclub) [![PyPI license](https://img.shields.io/pypi/l/ansicolortags.svg)](https://pypi.python.org/pypi/ansicolortags/)
+
 Welcome!  This is the codebase for a **full** data analysis pipeline for the *LendingClub* loan data (which can be found on [Kaggle](https://www.kaggle.com/wendykan/lending-club-loan-data#loan.csv "Lending Club Loan Data")).  Everything in this repository was developed by **Zack Klein**.  For any questions, comments, concerns, or anything else, please reach out at klein.zachary.j@gmail.com.  All feedback is welcome!
 
 You can find this analysis exposed at https://lending-club.zacharyjklein.com/
