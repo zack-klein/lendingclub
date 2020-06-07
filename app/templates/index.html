@@ -3,11 +3,63 @@
 {{ super() }}
 <h1>{{ app_name }}</h1>
 <p class="lead">
-  A sentence with an intriguing summary.
+  How do Americans borrow money?
 </p>
 <h2>The backstory:</h2>
 <div class="row">
   <div class="col-md-8">
-    A longer description with why this thing exists, and the actual project!
+    I did a coding challenge analyzing
+      <a href='https://www.kaggle.com/wendykan/lending-club-loan-data'>
+        some data on Kaggle from The Lending Club,
+      </a>
+    for which I built an end-to-end data pipeline with a Tableau
+    Visualization. You can find my write-up and data pipeline for this project
+      <a href='https://github.com/zack-klein/lendingclub/blob/master/README.md'>
+        here.
+      </a>
+    The dashboard I built is below and also on Tableau Server
+      <a href='https://public.tableau.com/profile/zack8776#!/vizhome/LendingClubLoanProject/TargetingbyInterestandLocation'>
+        here.
+      </a>
+    <br><br>
   </div>
+</div>
+<div class="row">
+  <div class='tableauPlaceholder' id='viz1575825295465' style='position: relative'>
+    <noscript>
+      <a href='#'>
+        <img alt=' ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Le&#47;LendingClubLoanProject&#47;TargetingbyInterestandLocation&#47;1_rss.png' style='border: none' />
+      </a>
+    </noscript>
+    <object class='tableauViz'  style='display:none;'>
+      <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+      <param name='embed_code_version' value='3' />
+      <param name='site_root' value='' />
+      <param name='name' value='LendingClubLoanProject&#47;TargetingbyInterestandLocation' />
+      <param name='tabs' value='no' /><param name='toolbar' value='yes' />
+      <param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Le&#47;LendingClubLoanProject&#47;TargetingbyInterestandLocation&#47;1.png' />
+      <param name='animate_transition' value='yes' />
+      <param name='display_static_image' value='yes' />
+      <param name='display_spinner' value='yes' />
+      <param name='display_overlay' value='yes' />
+      <param name='display_count' value='yes' />
+    </object>
+  </div>
+  <script type='text/javascript'>
+    var divElement = document.getElementById('viz1575825295465');
+    var vizElement = divElement.getElementsByTagName('object')[0];
+    if ( divElement.offsetWidth > 800 ){
+      vizElement.style.width='1000px';vizElement.style.height='827px';
+    }
+    else if ( divElement.offsetWidth > 500 ){
+      vizElement.style.width='1000px';vizElement.style.height='827px';
+    }
+    else {
+      vizElement.style.width='100%';vizElement.style.height='1327px';
+    }
+    var scriptElement = document.createElement('script');
+    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
+    vizElement.parentNode.insertBefore(scriptElement, vizElement);
+  </script>
+</div>
 {% endblock body %}
