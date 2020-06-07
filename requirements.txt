@@ -1,0 +1,12 @@
+awscli
+bandit
+boto3
+chronos-cli
+black
+flake8
+flask
+flask-admin
+flask-bootstrap
+flask-sqlalchemy
+google-cloud-secret-manager
+gunicorn

@@ -1,0 +1,36 @@
+language: python
+branches:
+  only:
+  - master
+services:
+- docker
+install:
+- pip install -r requirements.txt
+- if [ ! -d "$HOME/google-cloud-sdk/bin" ]; then rm -rf $HOME/google-cloud-sdk; export
+  CLOUDSDK_CORE_DISABLE_PROMPTS=1; curl https://sdk.cloud.google.com | bash; fi >
+  /dev/null
+- source /home/travis/google-cloud-sdk/path.bash.inc
+# - aws configservice describe-delivery-channels > /dev/null
+# - gcloud --quiet version > /dev/null
+# - gcloud --quiet components update > /dev/null
+# - echo $GCLOUD_SERVICE_ACCOUNT_KEY | base64 --decode -i > ${HOME}/gcloud-service-key.json
+# - gcloud auth activate-service-account --key-file ${HOME}/gcloud-service-key.json
+script:
+- set -e
+- bash scripts/test.sh
+- GIT_TAG=$(chronos infer)
+- git tag $GIT_TAG -a -m "[ci skip] Generated tag $GIT_TAG for build $TRAVIS_BUILD_NUMBER"
+- git push https://$GITHUB_TOKEN@github.com/$GITHUB_USERNAME/$GITHUB_REPO.git --tags
+# - gcloud auth configure-docker --quiet > /dev/null
+# - bash scripts/publish-docker.sh "GCR URL" "IMAGE NAME" "$GIT_TAG"
+# - eval $(aws ecr get-login --no-include-email)
+# - bash scripts/publish-docker.sh "ECR URL" "IMAGE NAME" "$GIT_TAG"
+notifications:
+  slack:
+    secure: em0JrpvjBUjINac70NbTxNar43OpeyXg1bku9NMa7BT8MEyzs6OWsECk6eTAddtNNGFpEcAwKpGJl4jnQnkaf1gCeaKTRQOwtFDFhfDwUKjzwNG2pvQNrd7BEpMbYFcfJgPB75ReicbLxetvc1gosDEl/akvhCOqLKwil2BKAEzukqpbPISKUYW3l9JY8VoH7JO+nit1M51bZEqzkl/nd6VQuwfv7nyVWTg2egtFMu8YWnq1bjeV1Cn/IcZcztnGG4GS0RsDcsVpFuyfbx+C+5sullEOn7wDuXwV7Wmy6obFqc2ygI6A65c0aryZTvT9Ly2MRZ9/An46RsmJteb7a2Sd0z5mmhRIUV9CB2QwlttBpm6Qh16S59ACBJy7MCWj/G+/ifAUNky+311v+Phtqdm3opaAdrPXPWR85wFW2WF7w7mwERNR/LyQ8iw4ha4pgZrTsBGhMQ9ZJ6TTJqMEJTdKpONE6bttYXFW71kgIUCmZMcrQJgwS114QYkC0Z2aKWAVcmhWD0CeNlVjBPGIZBoTrF/pops3UEvl3SySnlQ15NR5ejPHKcj8pv5lDX4F2sAL2rmlPXEbxLhd0/wVgMjOxSqwV7PJfACEo1rlv7pCF2QwFo3qdeawgWCLeTtb/CvaUbsOFVQhDmjgM/Agefb2wu386gvb44DGpkuM+Yc=
+env:
+  global:
+  - AWS_DEFAULT_REGION=us-east-1
+  - secure: jFVwUUQpkLaAlcmYfm4molNbEXvbBvNHlm5//lT276+13YLHa8tf1aFKQxjef/uruOcc3JmIhqtoDzaoT5n3IV4p0eJbs0pvRSvhY2gwrdZn+W41EgMnnrPnTMer9K9439Mdu+zNtMVrDlEV/I2XG/SRXVCLS42ANccy587sXmXjfR5Yb3Yby3ygw5zNdz9omvCYuNZJHBG9NbOE2+OBeWlHmCJlCP7TP/bwDqf+xukpORTQJtnqhpvOm80SUoteF0nXwP/f4vDICNu6IhX17SHuV3KAT/q2jmGOgPsrw5yGJc7MCHS7gfq28+Xn5Z1+36uCVRC9ARHlvPMSZpOnOYnR/PITgbUF+MlwBzBM/AGXNTIhDOjza54X0+ntpYPG0dHQEtDxYfi4vsWUI1FVXqa3uq2Wk292ouredjaiH4IFxeZ0cEOMvDcPx6koatxu4Xl9uAfe59ZY0WqZTOeK6ThTIa5HrZTljuI5Y6xMB3UZFW/qiazx93hs05imp0nEOLmgCXQ2GwPp4K+YLxBJuRGV+2T8qfNw46Bg6JekkbmZ9VFX0BZfCdTrJO4PL9bihy930fXDA8mu+QEIG4epeZX7uVO2KFmwZMlcFicAjJ/4emQFfWHMHkDvctNk+wJ4AJ9T4sQj5Ii0p6AWchUBT5b+ggxdM0fIpUmnBPcwnl0=
+  - secure: qS9R6XUGUtTEmr2HYoM0I9RNcdFQ4JlAK/j0MVurj4pyy/leC7oVAS0jNeQdz5F7vXJdUOFJ/iCrQ9krubLSgG9k05xaAYDvTATZRHWrcnmm4qcH9nossUN/Ybi3rA4No0wq9f6EiksVNTf5Ho2+sonx7aehvgRngOwpzJK1+kiJwrHH+wotHUehTKYMIvJyLtYZbm8zwaCw0rWWzBQZZYoqiNNlqQre3w7Cw61X3kksmBGbfB7hzkqvPIXGmblogUZvfUryQvpH3qTd5KFxsLpiTN6mOo/9zvPjOPGlOpp9YioVcincRigqbKARieBQpmshV10pZpqPl3eGJ55G2tld4gCY3tKevICsCbqORY/KhzdC1naZVJmAGq5KsmwcUN6qYRtr6Vm5XYj/oxnwjba50EHQfDbxVFAA8OmQqhN2u2YMmoDNornp6l9O0zUs2DosEqifAx1Dx4AwUpvkgmmTOVFmBnXbXiJ+YzjjoYp+Ih04FJPLFF2xD7PzrxBi1zIvGddXxlqG6Y5mDgRdEf1oIRBFNE0ozyVWfIR/ZFzytl57Ve89NCJ6ZdqCbwM6TL+3KqNbQKuAhyjx+B7jDrwMeTEG9T0Si0vA99DfXH2f0cWPNP/qKlnrtaL4D3lpuwc0cwO297g/Dygm1/l7kPztoHagNlsWwNY531gHqmw=
+  - secure: pPm8EgpcccOWOfVE6U0X4wAHItDgRIy46eGMNLzrYtW63NvWkOulo0PPoW9KzOXxsSz5nwJe2fKZ0ChPcmoHxURulyEtKb7nJrw4OMAf6ZRr1Qy1NCuLmnFA/yIjVxiEQLXR0utW6NTOpInLTMveRqwC2pBSdr1j7fQh+zTntncz3tLLirrdBk5RpxXF1U3AtzyceM3r2Xmp0H0Y3BIkKU6zUNNSvOrGWHZeDqedG30I7Iel5Comz5yCFEmo+ZpUXeEwcuLH+O0DCw/r+/+oLDiQf/hQmVdc+62mwJ3Ynto9W8Gl29z9wKF5llaMqjKMVzrbLK6OhD7Cihv+5OEwfhbmEM61dxKOBJGLleFJdgN+bWhutb0JDDhNIBrlJeUfgKIxR3m1q1ZzLCEFB3IdPIUI72mV9c5Z44BxCP8x39uhb3hv3pGu+/ymEEe1JvmC5DPOM71mCro/tBB2ZOpCFeu5hh+PctshWdX1GHV03zOQoscKxglBXCono804nDJw8k55C/X4bP8ETvK3e1jyDuctG91qLQinyV9p1J4jqHx2skCgt3AM6V+wpF493UfenSR0pMc7z5QG3bW40amKmg0Buk5PAx+r4GRYUgwGILo/J42wSMNh9PcpFSOBg9CUhXzkqdRUmaT9e9lQGbtottcf/hT4kDtyT9YuYkhg3Nk=
