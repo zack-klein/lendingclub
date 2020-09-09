@@ -4,8 +4,6 @@
 
 Welcome!  This is the codebase for a **full** data analysis pipeline for the *LendingClub* loan data (which can be found on [Kaggle](https://www.kaggle.com/wendykan/lending-club-loan-data#loan.csv "Lending Club Loan Data")).  Everything in this repository was developed by **Zack Klein**.  For any questions, comments, concerns, or anything else, please reach out at klein.zachary.j@gmail.com.  All feedback is welcome!
 
-You can find this analysis exposed at https://lending-club.zacharyjklein.com/
-
 # A Note on Repository Structure
 Before diving too deep, it's important to note there are two principal components to this project: the **app** of the data and the **pipeline** to keep the data fresh. These priorities are reflected in the directory structuring, as the two main folders in the root are `app` and `pipeline` (`docs` is there for images and such).  Essentially, each of these directories should be treated as the root directory of its own project (since, in a production environment, they would likely be separate).
 
